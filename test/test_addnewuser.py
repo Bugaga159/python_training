@@ -12,12 +12,12 @@ def app(request):
 
 def test_addnewuser(app):
 	app.session.login(user='admin', password='secret')
-	app.add_new_user(NewUser(firstname="", lastname="", address=""))
-	app.delete_user()
+	app.new_user.add(NewUser(firstname="", lastname="", address=""))
+	app.new_user.delete()
 	app.session.logout()
 
 def test_addnewuser_empy_data(app):
 	app.session.login(user='admin', password='secret')
-	app.add_new_user(NewUser(firstname="", lastname="", address=""))
-	app.delete_user()
+	app.new_user.add(NewUser(firstname="", lastname="", address=""))
+	app.new_user.delete()
 	app.session.logout()
