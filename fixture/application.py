@@ -2,20 +2,18 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 
+from fixture.session import SessionHelper
 from model.new_user import NewUser
 
 
 class Application:
 	def __init__(self):
 		self.driver = webdriver.Chrome(ChromeDriverManager().install())
-		self.vars = {}
+		self.driver.implicitly_wait(60)
+		self.session = SessionHelper(self)
 
 	def destroy(self):
 		self.driver.quit()
-
-	def logout(self):
-		# logout
-		self.driver.find_element(By.LINK_TEXT, "Logout").click()
 
 	def go_home_page(self):
 		# go home page
@@ -36,12 +34,6 @@ class Application:
 		self.driver.find_element(By.NAME, "address").click()
 		self.driver.find_element(By.NAME, "address").send_keys("%s" % new_user.address)
 		self.driver.find_element(By.NAME, "submit").click()
-
-	def login(self, user, password):
-		self.open_page()
-		self.driver.find_element(By.NAME, "user").send_keys(user)
-		self.driver.find_element(By.NAME, "pass").send_keys(password)
-		self.driver.find_element(By.CSS_SELECTOR, "input:nth-child(7)").click()
 
 	def open_page(self):
 		# open site
